@@ -1,0 +1,5 @@
+pyneuphonic
+pyaudio
+transformers
+torch
+python-dotenv
