@@ -90,7 +90,6 @@ if __name__ == "__main__":
     while True:
         # Get the user's transcribed speech input
         transcribed_text = speech_recognition()
-        messages.append({"role": "assistant", "content": transcribed_text})
         print("Final transcription:", transcribed_text)
         
         # Add the user's input to the messages list
@@ -103,8 +102,7 @@ if __name__ == "__main__":
         messages.append({"role": "assistant", "content": llm_output})
         
         # Update conversation history
-        conversation_history += f"\n LLM: {llm_output}"
-        print(f"LLM Output: {llm_output}")
+        print(f"Conversation: {messages}")
         
         # Convert the assistant's output to speech using TTS
         neuphonic_tts(llm_output)
