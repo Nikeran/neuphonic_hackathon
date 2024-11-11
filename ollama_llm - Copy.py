@@ -81,6 +81,7 @@ def OA_chat(text, PROMPT=None):
     completion = client.chat.completions.create(model="gpt-4o",
                                                  messages=messages)
     output = completion.choices[0].message.content
+    messages.append(output)
     return output
 
 '''
@@ -101,33 +102,20 @@ def language_model_chat(user_input, PROMPT=None):
     return output
 '''
 
-if __name__ == "__main__":
-    text = ""
-    user_personality = language_model_chat(text, PROMPT)
-    PROMPT2 = f"Here's a psychological profile: \n {user_personality} \n I want you to build an antagonistic personality to the one given, that will be used to simulate a workplace disagreement. The output will look like this: <|personality_type|> \n <|personality_summary|>"
-    antagonistic_personality = language_model_chat(text, PROMPT2)
-    PROMPT3 = f"Here's a psychological profile of a user: \n {user_personality} and a personality antagonistic to it: \n {antagonistic_personality} \n Build a workplace scenario in which the first personality is tested against the second one to see how the first person would handle the interaction. This scenario will be used in a simulated behavioural online assessment. This is for an ambitious AI startup Neuphonic that focuses on low latency text to speech. The first personality is a new employee and the second one is their manger. Adress the new employee as you, this prompt will be read by the person taking the OA. Don't explicitly mention the personality types in your answer. Output only a short description of the circumstances consisting of a few sentences."
-    scenario = language_model_chat(text, PROMPT3)
-    PROMPT4 = f"You are tasked with having a natural conversation with a user that's going to be tested on his behavioral performance. Here's a hypothetical scenario: \n {scenario} \n You are the manager with the following personality: {antagonistic_personality} the conversation will start now. If you agree, say OK."
-    messages = [{"role": "system", "content": PROMPT4},
-            {"role": "assistant", "content": "OK"}]
-    out = OA_chat(text, PROMPT4)
-    print(user_personality)
-    print(antagonistic_personality)
-    print(scenario)
-    print(out)
-    
-   while True:
-    user_input = input("User Input: ")
-    # Append the user's input to the conversation history
-    messages.append({"role": "user", "content": user_input})
-    
-    # Get the assistant's response
-    llm_output = OA_chat(user_input, PROMPT4)
-    
-    # Append the assistant's response to the conversation history
-    messages.append({"role": "assistant", "content": llm_output})
-    
-    # Print the assistant's response
-    print(llm_output)
+text = ""
+user_personality = language_model_chat(text, PROMPT)
+PROMPT2 = f"Here's a psychological profile: \n {user_personality} \n I want you to build an antagonistic personality to the one given, that will be used to simulate a workplace disagreement. The output will look like this: <|personality_type|> \n <|personality_summary|>"
+antagonistic_personality = language_model_chat(text, PROMPT2)
+PROMPT3 = f"Here's a psychological profile of a user: \n {user_personality} and a personality antagonistic to it: \n {antagonistic_personality} \n Build a workplace scenario in which the first personality is tested against the second one to see how the first person would handle the interaction. This scenario will be used in a simulated behavioural online assessment. This is for an ambitious AI startup Neuphonic that focuses on low latency text to speech. The first personality is a new employee and the second one is their manger. Adress the new employee as you, this prompt will be read by the person taking the OA. Don't explicitly mention the personality types in your answer. Output only a short description of the circumstances consisting of a few sentences."
+scenario = language_model_chat(text, PROMPT3)
+PROMPT4 = f"You are tasked with having a natural conversation with a user that's going to be tested on his behavioral performance. Here's a hypothetical scenario: \n {scenario} \n You are the manager with the following personality: {antagonistic_personality} the conversation will start now. If you agree, say OK."
+messages = [{"role": "system", "content": PROMPT4},
+        {"role": "assistant", "content": "OK"}]
 
+if __name__ == "__main__":
+    
+    while True:
+        user_input = input("User Input: ")
+        print(user_input)
+        llm_output = OA_chat(user_input, PROMPT4)
+        print(llm_output)
