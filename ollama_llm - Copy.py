@@ -118,10 +118,17 @@ if __name__ == "__main__":
     print(scenario)
     print(out)
     
-    '''
-    while True:
-        user_input = input("User Input: ")
-        print(user_input)
-        llm_output = language_model_chat(user_input)
-        print(llm_output)
-    '''
+   while True:
+    user_input = input("User Input: ")
+    # Append the user's input to the conversation history
+    messages.append({"role": "user", "content": user_input})
+    
+    # Get the assistant's response
+    llm_output = OA_chat(user_input, PROMPT4)
+    
+    # Append the assistant's response to the conversation history
+    messages.append({"role": "assistant", "content": llm_output})
+    
+    # Print the assistant's response
+    print(llm_output)
+
