@@ -81,6 +81,7 @@ def OA_chat(text, PROMPT=None):
     completion = client.chat.completions.create(model="gpt-4o",
                                                  messages=messages)
     output = completion.choices[0].message.content
+    messages.append(output)
     return output
 
 '''
